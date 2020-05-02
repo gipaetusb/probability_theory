@@ -110,3 +110,55 @@ for it in range(iters):
         )
     stat += len(np.unique(reached))
 print(stat / iters)
+
+
+# 2.13
+"""
+If reveals left beaker first: L-Odd / R-Even; L-Odd / R-Odd; L-Even / R-Odd; L-Even / R-Even
+If reveals right beaker first: R-Odd / L-even; R-Odd / L-Odd; R-Even / L-Odd; R-Even / R-Even
+
+So, sample space:
+L-E / R-O; L-E / R-E;
+R-E / L-O; R-E / L-E;
+
+space = 4 - 1
+chance left  = 1 / 3
+"""
+
+# 2.15
+s215 = 10**8
+secs_h = 60**2
+newspaper = np.random.choice(np.arange(secs_h), size=s215)
+mrjohnson = np.random.choice(np.arange(secs_h / 2, 3 * secs_h / 2), size=s215)
+print(np.sum(newspaper < mrjohnson) / s215)  # 87.5%
+
+
+# 2.17
+def prob_f(a: np.array, b: np.array, c: np.array):
+    """
+    Use quadratic formula: x = (-B ± √(B^2 - 4AC)) / 2A
+
+    For a solution to exist it must hold B^2 - 4AC >= 0
+    """
+    return np.sum(b**2 - 4 * a * c >= 0) / len(a)
+
+
+rep = 10**7
+print("Any number within |q|")
+for q in (1, 10, 100, 1000, 10000):
+    a, b, c = np.random.uniform(low=-q, high=q, size=(3, rep))
+    prob = prob_f(a, b, c)
+    print(f"For q={q}, P={round(prob*100, 1)}%")
+
+print("Non-zero integers")
+for q in (1, 10, 100, 1000, 10000):
+    univ = np.arange(start=-q, stop=q + 1, step=1)
+    univ = univ[univ != 0]
+    a, b, c = np.random.choice(univ, size=(3, rep))
+    prob = prob_f(a, b, c)
+    print(f"For q={q}, P={round(prob*100, 1)}%")
+
+# 2.19
+"""
+unit circle: X^2 + Y^2 = 1
+"""
